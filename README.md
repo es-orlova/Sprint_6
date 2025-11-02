@@ -26,8 +26,8 @@ Sprint_6/
 │   └── order_data.py           # Данные для тестов заказа
 ├── tests/                     # Директория с тестами
 │   ├── test_faq.py             # Тесты для раздела "Вопросы о важном"
-│   ├── test_order.py           # Тесты для флоу заказа
-│   └── test_links.py           # Тесты для ссылок в хедере
+│   ├── test_order_flow.py      # Тесты для флоу заказа
+│   └── test_header_links.py    # Тесты для ссылок в хедере
 ├── allure_results/            # Папка для JSON-файлов отчета Allure (появится после запуска)
 ├── venv/                      # Виртуальное окружение
 ├── conftest.py                # Фикстура для запуска и закрытия драйвера
@@ -48,34 +48,3 @@ Sprint_6/
 Тестирование ссылок в хедере (test_links.py):
  Проверяется, что клик по логотипу "Самокат" возвращает пользователя на главную страницу.
  Проверяется, что клик по логотипу "Яндекс" открывает в новой вкладке главную страницу "Дзен" (dzen.ru).
-
-⚙️ Установка и запуск
-1. Клонируйте репозиторий:
-
-Bash
-git clone [URL_ВАШЕГО_РЕПОЗИТОРИЯ]
-cd Sprint_6
-2. Создайте и активируйте виртуальное окружение:
-Bash
-# Для macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-# Для Windows
-python -m venv venv
-venv\Scripts\activate
-3. Установите зависимости:
-Bash
-pip install -r requirements.txt
-(Geckodriver для Firefox установится автоматически благодаря webdriver-manager.)
-4. Запустите тесты: Для запуска всех тестов и сбора данных для отчета Allure выполните команду:
-
-Bash
-pytest --alluredir=allure_results
-📊 Просмотр Allure-отчета
-Для генерации и просмотра отчета Allure:
-1. Установите Allure (если его нет): Инструкции по установке: https://docs.qameta.io/allure/#_installing_a_commandline
-2. Сгенерируйте отчет: После запуска тестов (шаг 4 выше), выполните:
-
-Bash
-allure serve allure_results
-Эта команда откроет отчет в вашем браузере по умолчанию.
