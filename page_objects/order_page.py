@@ -1,16 +1,12 @@
 import allure
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 from page_objects.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
+
 
 
 
 class OrderPage(BasePage):
 
-    
     @allure.step("Заполнить поле Имя")
     def set_fild_name(self, name):
         self.send_keys_to_input(OrderPageLocators.NAME, name)
@@ -46,7 +42,6 @@ class OrderPage(BasePage):
         self.set_fild_phone_number(user_data['phone'])
         self.click_next_button()
 
-
     @allure.step("Заполнить поле 'Когда привезти'")
     def set_when(self, date):
         self.send_keys_to_input(OrderPageLocators.WHEN_INPUT, date)
@@ -59,12 +54,13 @@ class OrderPage(BasePage):
         self.scroll_to_element(period_locator)
         self.click_on_element(period_locator)
 
-    @allure.step("Выбрать цвет самоката")
-    def check_color(self, color):
-        if color == 'black':
-            self.click_on_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
-        elif color == 'grey':
-            self.click_on_element(OrderPageLocators.COLOR_CHECKBOX_GREY)
+    @allure.step("Выбрать черный цвет самоката")
+    def check_color_black(self):
+        self.click_on_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
+
+    @allure.step("Выбрать серый цвет самоката")
+    def check_color_grey(self):
+        self.click_on_element(OrderPageLocators.COLOR_CHECKBOX_GREY)
 
     @allure.step("Заполнить поле 'Комментарий'")
     def set_comment(self, comment):
@@ -81,8 +77,6 @@ class OrderPage(BasePage):
         self.check_color(user_data['color'])
         self.set_comment(user_data['comment'])
         self.click_final_order_button()
-
-    
     
     @allure.step("Ожидать появления модального окна подтверждения")
     def wait_for_confirmation(self):

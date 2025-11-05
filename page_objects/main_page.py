@@ -11,7 +11,7 @@ class MainPage(BasePage):
 
     @allure.step("Открыть главную страницу")
     def open_main_page(self):
-        self.driver.get(self.url)
+        self.open_url(self.url)
 
     @allure.step("Принять куки")
     def accept_cookies(self):
@@ -19,7 +19,6 @@ class MainPage(BasePage):
             self.click_on_element(MainPageLocators.COOKIE_BUTTON)
         except Exception:
             allure.attach("Кнопка 'Куки' не найдена или уже принята", name="Cookie Info", attachment_type=allure.attachment_type.TEXT)
-            print("Кнопка 'Куки' не найдена или уже принята")
 
     @allure.step("Проскроллить до секции 'Вопросы о важном'")
     def scroll_to_faq_section(self):
@@ -44,14 +43,14 @@ class MainPage(BasePage):
     def click_yandex_logo(self):
         self.click_on_element(MainPageLocators.YANDEX_LOGO)
 
-    @allure.step("Нажать на кнопку 'Заказать'")
-    def click_order_btn(self, button_type):
-        if button_type == 'top':
-            locator = MainPageLocators.ORDER_BUTTON_TOP
-        elif button_type == 'bottom':
-            locator = MainPageLocators.ORDER_BUTTON_BOTTOM
-            self.scroll_to_element(locator) 
-        else:
-            raise ValueError("Неверный тип кнопки: 'top' или 'bottom'")
-        
+    @allure.step("Нажать на верхнюю кнопку 'Заказать'")
+    def click_order_btn_top(self):
+        """Нажимает на верхнюю (в хедере) кнопку 'Заказать'."""
+        self.click_on_element(MainPageLocators.ORDER_BUTTON_TOP)
+
+    @allure.step("Нажать на нижнюю кнопку 'Заказать'")
+    def click_order_btn_bottom(self):
+        """Скроллит до нижней кнопки 'Заказать' и нажимает на нее."""
+        locator = MainPageLocators.ORDER_BUTTON_BOTTOM
+        self.scroll_to_element(locator) 
         self.click_on_element(locator)

@@ -2,12 +2,17 @@ import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.remote.webelement import WebElement
+
 
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
+
+    @allure.step("Открыть URL: {url}")
+    def open_url(self, url):
+        """Открывает указанный URL в браузере."""
+        self.driver.get(url)
 
     @allure.step("Найти видимый элемент по локатору {locator}")
     def find_element_with_wait(self, locator, time=10):
@@ -17,7 +22,6 @@ class BasePage:
             return element
         except TimeoutException:
             raise TimeoutException(f"Не удалось найти элемент по локатору {locator} за {time} секунд")
-
 
     @allure.step("Найти кликабельный элемент по локатору {locator}")
     def find_element_to_be_clickable(self, locator):
@@ -61,9 +65,7 @@ class BasePage:
     @allure.step("Ожидать, что URL будет содержать '{expected_url_part}'")
     def wait_for_url(self, expected_url_part, time=10):
         try:
-            WebDriverWait(self.driver, time).until(
-                EC.url_contains(expected_url_part)
-            )
+            WebDriverWait(self.driver, time).until(EC.url_contains(expected_url_part))
         except TimeoutException:
             allure.attach(self.driver.get_screenshot_as_png(), name="Screenshot on failure", attachment_type=allure.attachment_type.PNG)
             raise TimeoutException(f"URL не содержит '{expected_url_part}' по истечении {time} секунд. Текущий URL: {self.driver.current_url}")
