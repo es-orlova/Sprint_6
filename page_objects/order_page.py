@@ -69,14 +69,6 @@ class OrderPage(BasePage):
     @allure.step("Нажать финальную кнопку 'Заказать'")
     def click_final_order_button(self):
         self.click_on_element(OrderPageLocators.ORDER_BUTTON_FINAL)
-
-    @allure.step("Заполнить вторую страницу формы заказа")
-    def fill_second_page(self, user_data):
-        self.set_when(user_data['date'])
-        self.set_rental_period(user_data['period'])
-        self.check_color(user_data['color'])
-        self.set_comment(user_data['comment'])
-        self.click_final_order_button()
     
     @allure.step("Ожидать появления модального окна подтверждения")
     def wait_for_confirmation(self):
